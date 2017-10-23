@@ -9,7 +9,7 @@ export class PlayerService {
 
   constructor() {
     this.players = [new Player(), new Player()];  // TODO: query firebase
-    this.players[0].code = `function(state) {
+    this.saveCode(0, `function(state) {
       var topRow = state[0];
       var validMoves = [];
       topRow.forEach(function(v, i) {
@@ -18,8 +18,8 @@ export class PlayerService {
         }
       });
       return validMoves[Math.floor(Math.random() * validMoves.length)];
-     }`;
-    this.players[1].code = `function(state) {
+     }`);
+    this.saveCode(1, `function(state) {
       var topRow = state[0];
       var validMoves = [];
       topRow.forEach(function(v, i) {
@@ -28,9 +28,7 @@ export class PlayerService {
         }
       });
       return validMoves[Math.floor(Math.random() * validMoves.length)];
-     }`;
-    this._setGetMoveFunction(0, this.players[0].code);
-    this._setGetMoveFunction(1, this.players[1].code);
+     }`);
   }
 
   getMove(player: number, state: BoardSpace[][]): number {
@@ -55,7 +53,12 @@ export class PlayerService {
     eval('this.getPlayer' + (player + 1) + 'Move = ' + code + ';');
   }
 
-  saveCode(code: string): void {
+  saveCode(player: number, code: string): void {
+    this.players[player].code = code;
+    this._setGetMoveFunction(player, code);
+  }
 
+  getCode(player: number): string {
+    return this.players[player].code;
   }
 }

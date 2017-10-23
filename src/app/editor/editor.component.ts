@@ -6,11 +6,10 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  code: string;
+  @Input() code: string;
   @Output() saved: EventEmitter<any> = new EventEmitter();
 
   constructor() {
-    this.code = '// initial code goes here';
   }
 
   ngOnInit() {
