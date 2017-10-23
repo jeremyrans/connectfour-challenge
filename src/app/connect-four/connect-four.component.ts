@@ -9,18 +9,13 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
   styleUrls: ['./connect-four.component.css']
 })
 export class ConnectFourComponent implements OnInit {
-  @Input() foo;
-
-  get printFoo(): string {
-    return this._connectFourService.foo;
-  }
+  @Input() player1Code = '';
 
   constructor(private _connectFourService: ConnectFourService) {
   }
 
   ngOnInit() {
-    this._connectFourService.foo = this.foo;
-    this._connectFourService.startGame();
+    // this._connectFourService.startGame();
   }
 
 }

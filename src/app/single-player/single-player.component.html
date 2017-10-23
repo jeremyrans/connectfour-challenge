@@ -1,2 +1,3 @@
-<app-connect-four appConnectFour></app-connect-four>
-<app-editor></app-editor>
+<app-connect-four></app-connect-four>
+<app-editor (saved)="setCode($event)" [code]="player1Code"></app-editor>
+<button mat-button (click)="startGame()">START</button>

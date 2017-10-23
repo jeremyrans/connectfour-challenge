@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ConnectFourService {
-  foo: string;
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
 
   constructor(private _playerService: PlayerService) { }
@@ -16,7 +15,7 @@ export class ConnectFourService {
       const playerMove = this._playerService.getMove(currentPlayer, this.gameState.getValue().board);
       this.gameState.getValue().playMove(playerMove, currentPlayer);
       currentPlayer = currentPlayer === 1 ? 2 : 1;
+      this.gameState.next(this.gameState.getValue());
     }
-
   }
 }
