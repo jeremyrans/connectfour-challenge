@@ -7,16 +7,22 @@ import { Injectable } from '@angular/core';
 export class ConnectFourService {
   foo: string;
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
+  currentPlayer = 1;
 
   constructor(private _playerService: PlayerService) { }
 
   startGame() {
-    let currentPlayer = 1;
     while (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      const playerMove = this._playerService.getMove(currentPlayer, this.gameState.getValue().board);
-      this.gameState.getValue().playMove(playerMove, currentPlayer);
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      this.playTurn();
     }
-
   }
+
+  playTurn() {
+    if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
+      const playerMove = this._playerService.getMove(this.currentPlayer, this.gameState.getValue().board);
+      this.gameState.getValue().playMove(playerMove, this.currentPlayer);
+      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    }
+  }
+  
 }
