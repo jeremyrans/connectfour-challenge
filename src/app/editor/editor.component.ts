@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-editor',
@@ -6,24 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-
   code: string;
-  codemirrorConfig = {
-    mode: 'javascript',
-    lineNumbers: true,
-    gutters: ['CodeMirror-lint-markers'],
-    lint: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    highlightSelectionMatches: { showToken: /\w/ },
-    viewportMargin: Infinity
-  };
+  @Output() saved: EventEmitter<any> = new EventEmitter();
 
   constructor() {
     this.code = '// initial code goes here';
   }
 
   ngOnInit() {
+  }
+
+  onSave(): void {
+    this.saved.emit(this.code);
   }
 
 }

@@ -1,4 +1,4 @@
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatButtonModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -16,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AceEditorModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
