@@ -1,0 +1,5 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <ng-container *ngFor="let item of navItems">
+    <app-nav-item [label]="item.label" [href]="item.href" [active]="activeUrl === item.href"></app-nav-item>
+  </ng-container>
+</mat-toolbar>
