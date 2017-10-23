@@ -1,7 +1,6 @@
 import { ConnectFourService } from './../connect-four/connect-four.service';
 import { PlayerService } from './../player/player.service';
 import { Component, OnInit } from '@angular/core';
-import { ConnectFourService } from '../connect-four/connect-four.service';
 import { GameOverState } from '../game-state/game-state';
 
 @Component({
@@ -12,6 +11,7 @@ import { GameOverState } from '../game-state/game-state';
 export class SinglePlayerComponent implements OnInit {
 
   player1Code = '';
+  intervalTimer;
 
   constructor(private _playerService: PlayerService, private _connectFourService: ConnectFourService) { }
 
@@ -21,8 +21,23 @@ export class SinglePlayerComponent implements OnInit {
 
   startGame(): void {
     this._connectFourService.resetGame();
-    while (this._connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      setTimeout(() => this._connectFourService.playTurn(), 500);
+    this.setIntervalTimer();
+  }
+  
+  setIntervalTimer(): void {
+    if (this.intervalTimer) {
+        clearInterval(this.intervalTimer);
+        this.intervalTimer = undefined;
+    }
+    this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), 100);
+  };
+
+  private _playDelayedTurn(): void {
+    if (this._connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
+      this._connectFourService.playTurn();
+    }
+    else {
+      clearInterval(this.intervalTimer);
     }
   }
 
