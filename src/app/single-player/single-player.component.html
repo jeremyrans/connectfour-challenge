@@ -1,3 +1,11 @@
-<app-connect-four></app-connect-four>
-<app-editor (saved)="setCode($event)" [code]="player1Code"></app-editor>
-<button mat-button (click)="startGame()">START</button>
+<div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="10px">
+  <mat-card style="height: 350px;">
+    <mat-card-content>
+      <app-connect-four></app-connect-four>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="startGame()">START</button>
+    </mat-card-actions>
+  </mat-card>
+  <app-editor (saved)="setCode($event)" [code]="player1Code"></app-editor>
+</div>

@@ -7,6 +7,7 @@ import { MatCardModule, MatButtonModule, MatToolbarModule } from '@angular/mater
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AceEditorModule } from 'ng2-ace-editor';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
@@ -38,7 +39,8 @@ import { NavItemComponent } from './nav-item/nav-item.component';
     MatButtonModule,
     MatToolbarModule,
     RouterModule,
-    routing
+    routing,
+    FlexLayoutModule
   ],
   providers: [
     PlayerService,
