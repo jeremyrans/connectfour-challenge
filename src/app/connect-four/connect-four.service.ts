@@ -10,14 +10,8 @@ export class ConnectFourService {
   currentPlayer = 1;
 
   constructor(private _playerService: PlayerService) { }
-
-  startGame() {
-    while (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      this.playTurn();
-    }
-  }
-
-  playTurn() {
+  
+  playTurn(): void {
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
       const playerMove = this._playerService.getMove(this.currentPlayer, this.gameState.getValue().board);
       this.gameState.getValue().playMove(playerMove, this.currentPlayer);

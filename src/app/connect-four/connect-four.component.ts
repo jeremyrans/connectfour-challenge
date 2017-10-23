@@ -20,7 +20,10 @@ export class ConnectFourComponent implements OnInit {
 
   ngOnInit() {
     this._connectFourService.foo = this.foo;
-    this._connectFourService.startGame();
+  }
+
+  playTurn(): void {
+    this._connectFourService.playTurn();
   }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ConnectFourService } from '../connect-four/connect-four.service';
+import { GameOverState } from '../game-state/game-state';
 
 @Component({
   selector: 'app-single-player',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SinglePlayerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _connectFourService: ConnectFourService) { }
 
   ngOnInit() {
+    while (this._connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
+      setTimeout(() => this._connectFourService.playTurn(), 500);
+    }
   }
 
 }
