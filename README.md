@@ -14,6 +14,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
+## Deploy
+If you don't already have firebase-tools installed, run `sudo npm install -g firebase-tools`.
+
+Run `firebase deploy` after building to deploy the project to Firebase. It can be accessed at http://connectfour-challenge.firebaseapp.com.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
