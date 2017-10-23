@@ -1,0 +1,16 @@
+:host {
+  height: 100%;
+}
+
+.nav-item {
+  height: 97%;
+}
+
+.nav-item-label {
+  position: relative;
+  top: 14px;
+}
+
+.active {
+  background-color: #1a237e;
+}
