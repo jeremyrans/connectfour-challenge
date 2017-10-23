@@ -1,0 +1,11 @@
+.ace-editor {
+  width: 600px;
+  height: 600px;
+  overflow: auto;
+}
+
+ace-editor {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
