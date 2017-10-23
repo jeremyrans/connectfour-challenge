@@ -10,25 +10,27 @@ export class PlayerService {
   constructor() {
     this.players = [new Player(), new Player()];  // TODO: query firebase
     this.saveCode(0, `function(state) {
-      var topRow = state[0];
-      var validMoves = [];
-      topRow.forEach(function(v, i) {
-        if (v === 0) {
-          validMoves.push(i);
-        }
-      });
-      return validMoves[Math.floor(Math.random() * validMoves.length)];
-     }`);
+  var topRow = state[0];
+  var validMoves = [];
+  topRow.forEach(function(v, i) {
+    if (v === 0) {
+      validMoves.push(i);
+    }
+  });
+  return validMoves[Math.floor(Math.random() * validMoves.length)];
+}`
+    );
     this.saveCode(1, `function(state) {
-      var topRow = state[0];
-      var validMoves = [];
-      topRow.forEach(function(v, i) {
-        if (v === 0) {
-          validMoves.push(i);
-        }
-      });
-      return validMoves[Math.floor(Math.random() * validMoves.length)];
-     }`);
+  var topRow = state[0];
+  var validMoves = [];
+  topRow.forEach(function(v, i) {
+    if (v === 0) {
+      validMoves.push(i);
+    }
+  });
+  return validMoves[Math.floor(Math.random() * validMoves.length)];
+}`
+    );
   }
 
   getMove(player: number, state: BoardSpace[][]): number {
