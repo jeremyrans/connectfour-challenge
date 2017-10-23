@@ -9,6 +9,10 @@ export class ConnectFourService {
 
   constructor(private _playerService: PlayerService) { }
 
+  resetGame() {
+    this.gameState.next(new GameState());
+  }
+
   startGame() {
     let currentPlayer = 1;
     while (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {

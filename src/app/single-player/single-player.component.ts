@@ -9,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SinglePlayerComponent implements OnInit {
 
-  get player1Code(): string {
-    return this._playerService.getCode(0);
-  }
+  player1Code = '';
 
   constructor(private _playerService: PlayerService, private _connectFourService: ConnectFourService) { }
 
@@ -20,10 +18,12 @@ export class SinglePlayerComponent implements OnInit {
   }
 
   startGame(): void {
+    this._connectFourService.resetGame();
     this._connectFourService.startGame();
   }
 
   ngOnInit() {
+    this.player1Code = this._playerService.getCode(0);  // TODO: update on firebase change
   }
 
 }
