@@ -54,6 +54,7 @@ export class ConnectFourBoardComponent implements OnInit {
     this._connectFourService.gameState.subscribe(
       state => {
         if (state.gameOverState !== GameOverState.NOT_OVER) {
+          this._drawPieces(state.board);
           if (state.gameOverState === GameOverState.STALEMATE) {
             this._drawMessage(this._boardContext, 'Stalemate!');
           } else {
@@ -76,6 +77,14 @@ export class ConnectFourBoardComponent implements OnInit {
         return 'red';
       case BoardSpace.PLAYER_2:
         return this.classicTheme ? 'black' : 'yellow';
+    }
+  }
+
+  private _drawPieces(board: BoardSpace[][]): void {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        this._drawPiece(this._pieceContext, i, j, board[i][j], false);
+      }
     }
   }
 
@@ -114,24 +123,26 @@ export class ConnectFourBoardComponent implements OnInit {
   }
 
   private _animatePiece(context, col, startY, destY, space, startTime, time) {
-    const deltaTime = (time - startTime) / ((1.1 - this.speed) * 1000);
     const x = ((col + 1) * this._gridSquareSize) - (this._gridSquareSize / 2);
     const radius = this._gridSquareSize / 3;
     const color = this._getSpaceColor(space);
-    let newY = startY + ((destY - startY) * deltaTime);
+    let delta = (this.speed * 7) ** 2;
+    console.log(delta);
+    delta = delta < 5 ? 5 : delta;
+    let newY = startY + delta;
 
-    if (deltaTime >= 1) {
+    if (newY >= destY) {
       // last frame
       newY = destY;
     }
 
-    context.clearRect(x - radius - 1, startY - radius - 1, (radius + 1) * 2, destY + radius);
+    context.clearRect(x - radius - 1, 0, (radius + 1) * 2, destY + radius);
     this._drawCircle(context, x, newY, radius, color, color);
 
     // request new frame
-    if (deltaTime < 1) {
+    if (newY < destY) {
       requestAnimationFrame(function (t) {
-        this._animatePiece(context, col, startY, destY, space, startTime, t);
+        this._animatePiece(context, col, newY, destY, space, startTime, t);
       }.bind(this));
     }
   }
