@@ -1,3 +1,4 @@
+import { SandboxService } from './sandbox/sandbox.service';
 import { UserService } from './user/user.service';
 import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { environment } from '../environments/environment';
@@ -57,7 +58,8 @@ import 'hammerjs';
   providers: [
     PlayerService,
     ConnectFourService,
-    UserService
+    UserService,
+    SandboxService
   ],
   bootstrap: [AppComponent]
 })

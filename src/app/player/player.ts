@@ -24,9 +24,19 @@ export class Player extends BasePlayer {
     this.photoURL = player.photoURL;
   }
 
-  getMove(state: BoardSpace[][]): number {
+  getMove(state: BoardSpace[][], sandbox: any): number {
     this._setGetMoveFunction(this.code);
     const stateCopy = JSON.parse(JSON.stringify(state));
-    return this._getMove(stateCopy);
+    return this._getMove.call(sandbox, stateCopy);
+  }
+
+  // because we can't save methods to firebase
+  toBasePlayer(): BasePlayer {
+    const bp = new BasePlayer();
+    bp.code = this.code;
+    bp.name = this.name;
+    bp.email = this.email;
+    bp.photoURL = this.photoURL;
+    return bp;
   }
 }

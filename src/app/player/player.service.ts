@@ -1,6 +1,6 @@
 import { UserService } from './../user/user.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { BasePlayer } from './player';
+import { Player, BasePlayer } from './player';
 import { Injectable } from '@angular/core';
 import { BoardSpace } from '../game-state/game-state';
 import { Observable } from 'rxjs/Observable';
@@ -19,9 +19,9 @@ export class PlayerService {
     return Observable.of(null);
   }
 
-  savePlayer(player: BasePlayer): void {
+  savePlayer(player: Player): void {
     if (this._userService.user) {
-      this._db.object(player.id).set(player);
+      this._db.object(player.id).set(player.toBasePlayer());
     }
   }
 }
