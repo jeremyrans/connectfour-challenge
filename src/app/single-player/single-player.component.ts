@@ -65,7 +65,7 @@ export class SinglePlayerComponent implements OnInit {
         if (user) {
           playerId = user.uid;
         }
-        this.connectFourService.init(playerId, 'ai-1');
+        this.connectFourService.init(playerId, 'ai-1', 1);
       }
     );
 

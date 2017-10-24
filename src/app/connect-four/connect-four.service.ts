@@ -24,7 +24,8 @@ export class ConnectFourService {
     this.players.next([new Player(), new Player()]);
   }
 
-  init(player1Id: string, player2Id: string) {
+  init(player1Id: string, player2Id: string, startPlayer: number) {
+    this.currentPlayer = startPlayer;
     this.players.getValue()[0] = this._getDefaultPlayer(player1Id);
     this.players.getValue()[1] = this._getDefaultPlayer(player2Id);
     this.players.next(this.players.getValue());
