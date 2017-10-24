@@ -33,6 +33,7 @@ export class Player extends BasePlayer {
   // because we can't save methods to firebase
   toBasePlayer(): BasePlayer {
     const bp = new BasePlayer();
+    bp.id = this.id;
     bp.code = this.code;
     bp.name = this.name;
     bp.email = this.email;

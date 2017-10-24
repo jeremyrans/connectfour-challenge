@@ -7,7 +7,9 @@ export class SandboxService {
   public api = {
     checkLine: this.checkLine,
     checkWin: this.checkWin,
-    isValidMove: this.isValidMove
+    isValidMove: this.isValidMove,
+    applyMove: this.applyMove,
+    _boardSpaceToGameOverState: this._boardSpaceToGameOverState
   };
 
   constructor() { }
@@ -67,4 +69,19 @@ export class SandboxService {
     return col < board[0].length && board[0][col] === BoardSpace.EMPTY;
   }
 
+  applyMove(board: BoardSpace[][], col: number, player: BoardSpace): BoardSpace[][] {
+    const newBoard = JSON.parse(JSON.stringify(board));
+    if (!this.isValidMove(newBoard, col)) {
+      return null;
+    }
+
+    for (let i = newBoard.length - 1; i >= 0; i--) {
+      if (newBoard[i][col] === BoardSpace.EMPTY) {
+        newBoard[i][col] = player;
+        break;
+      }
+    }
+
+    return newBoard;
+  }
 }

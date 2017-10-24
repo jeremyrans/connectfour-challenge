@@ -65,24 +65,30 @@ function getMove(state) {{'{'}}
     <table>
       <tr>
         <th>Function</th>
+        <th>Arguments</th>
         <th>Return</th>
         <th>Description</th>
       </tr>
       <tr>
         <td>this.isValidMove(col)</td>
-        <td>boolean</td>
-        <td>Takes an integer column, returns true if the move would be valid and false if not</td>
+        <td>col: integer value of the column</td>
+        <td>bool</td>
+        <td>Use to check if a potential move is valid</td>
       </tr>
       <tr>
         <td>this.checkWin(state)</td>
-        <td>0, 1 or 2</td>
-        <td>Takes a 2d array representing a board state, returns 0 if that state does not represent a win, 1 if that state represents
-          a win for you, 2 if that state represents a win for your opponent</td>
+        <td>state: 2d integer array representing a board state</td>
+        <td>int: 0 (no winner), 1 (you win) or 2 (opponent wins)</td>
+        <td>Use to check if a potential board state results in a win</td>
       </tr>
       <tr>
-        <td>this.checkLine(space1, space2, space3, space4)</td>
-        <td>boolean</td>
-        <td>Takes four "space" values (0, 1 or 2) and returns true if space1 !== 0 && space1 === space2 === space3 === space4</td>
+        <td>this.applyMove(state, col, player)</td>
+        <td>state: 2d integer array representing a board state
+          <br/>col: integer value of the column to play
+          <br/>player: integer value of the player making the move, 1 (you) or 2 (opponent)
+        </td>
+        <td>int[][]</td>
+        <td>Takes a 2d array representing a board state, the column to play a piece in, and the player to play </td>
       </tr>
     </table>
   </mat-card-content>
