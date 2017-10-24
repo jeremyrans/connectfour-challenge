@@ -14,14 +14,14 @@ export class PlayerService {
 
   getPlayer(id: string): Observable<BasePlayer> {
     if (id && this._userService.user) {
-      return this._db.object(id).valueChanges();
+      return this._db.object('players/' + id).valueChanges();
     }
     return Observable.of(null);
   }
 
   savePlayer(player: Player): void {
     if (this._userService.user) {
-      this._db.object(player.id).set(player.toBasePlayer());
+      this._db.object('players/' + player.id).set(player.toBasePlayer());
     }
   }
 }

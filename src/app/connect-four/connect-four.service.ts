@@ -92,8 +92,8 @@ function(state) {
 
   playTurn(): void {
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      const apiCopy = JSON.parse(JSON.stringify(this._sandbox.api));
-      console.log(apiCopy);
+      const apiCopy = {};
+      Object.assign(apiCopy, this._sandbox.api);
       const playerMove = this.players.getValue()[this.currentPlayer - 1].getMove(this.gameState.getValue().board, apiCopy);
       const row = this._playMove(playerMove, this.currentPlayer);
       this.piecePlayed.next([row, playerMove, this.currentPlayer]);
