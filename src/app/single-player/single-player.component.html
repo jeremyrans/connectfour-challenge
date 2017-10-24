@@ -2,17 +2,11 @@
   <mat-card style="height: 400px;">
     <mat-card-header>
       <span style="line-height: 50px;">Game Speed:</span>
-      <mat-slider style="width: 65%;"
-        (change)="setIntervalTimer(false)"
-        max="1"
-        min="0"
-        step="0.05"
-        [value]="gameSpeed"
-        [(ngModel)]="gameSpeed">
+      <mat-slider style="width: 65%;" (change)="setIntervalTimer(false)" max="1" min="0" step="0.05" [value]="gameSpeed" [(ngModel)]="gameSpeed">
       </mat-slider>
     </mat-card-header>
     <mat-card-content>
-      <app-connect-four></app-connect-four>
+      <app-connect-four [speed]="gameSpeed"></app-connect-four>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="startGame()">START</button>

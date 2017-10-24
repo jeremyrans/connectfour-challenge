@@ -1,13 +1,15 @@
+import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { PlayerService } from './../player/player.service';
 import { Player } from './../player/player';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { GameState, GameOverState } from './../game-state/game-state';
+import { GameState, GameOverState, BoardSpace } from './../game-state/game-state';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ConnectFourService {
   // initialized: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  piecePlayed: BehaviorSubject<[number, number, number]> = new BehaviorSubject(null);
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
   players: BehaviorSubject<Player[]> = new BehaviorSubject([]);
   currentPlayer = 1;
@@ -63,13 +65,15 @@ function(state) {
   }
 
   resetGame(): void {
+    this.currentPlayer = 1;
     this.gameState.next(new GameState());
   }
 
   playTurn(): void {
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
       const playerMove = this.players.getValue()[this.currentPlayer - 1].getMove(this.gameState.getValue().board);
-      this.gameState.getValue().playMove(playerMove, this.currentPlayer);
+      const row = this.gameState.getValue().playMove(playerMove, this.currentPlayer);
+      this.piecePlayed.next([row, playerMove, this.currentPlayer]);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
       this.gameState.next(this.gameState.getValue());
     }

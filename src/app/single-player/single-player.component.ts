@@ -61,7 +61,6 @@ export class SinglePlayerComponent implements OnInit {
   ngOnInit() {
     this._userService.userObservable.subscribe(
       user => {
-        console.log('hi');
         let playerId = null;
         if (user) {
           playerId = user.uid;

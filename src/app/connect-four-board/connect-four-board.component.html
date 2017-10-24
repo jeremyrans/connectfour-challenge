@@ -1,2 +1,4 @@
-<canvas #gameCanvas width="350" height="300" style="border: 1px solid #000;" 
-[style.background-color]="this.classicTheme ? '#FDDD41' : 'blue'"></canvas>
+<div style="height: 300px; width: 350px;">
+  <canvas #pieceCanvas width="350" height="300" style="border: 1px solid #000; position: absolute; left: 10; top: 10; z-index: 1;"></canvas>
+  <canvas #boardCanvas width="350" height="300" style="border: 1px solid #000; position: absolute; left: 10; top: 10; z-index: 2;"></canvas>
+</div>

@@ -90,10 +90,13 @@ export class GameState {
     return col < COLS && this.board[0][col] === BoardSpace.EMPTY;
   }
 
-  playMove(col: number, player: number): void {
+  playMove(col: number, player: number): number {
+    let playedRow = -1;
+
     if (this._isValidMove(col)) {
       for (let i = ROWS - 1; i >= 0; i--) {
         if (this.board[i][col] === BoardSpace.EMPTY) {
+          playedRow = i;
           this.board[i][col] = player;
           break;
         }
@@ -102,5 +105,6 @@ export class GameState {
     } else {
       this.gameOverState = player === 1 ? GameOverState.PLAYER_2_WIN : GameOverState.PLAYER_1_WIN;
     }
+    return playedRow;
   }
 }

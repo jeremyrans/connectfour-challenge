@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./connect-four.component.css']
 })
 export class ConnectFourComponent {
-  @Input() player1Code = '';
+  @Input() speed = 0.5;
 
   constructor(private _connectFourService: ConnectFourService) {
   }
