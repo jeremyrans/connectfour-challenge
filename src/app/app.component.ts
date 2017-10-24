@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   navItems = [
-    { label: 'Single Player', href: '/single-player' },
-    { label: 'Multi Player', href: '/multi-player' },
+    { label: 'Practice', href: '/practice' },
+    { label: 'Multiplayer', href: '/multi-player' },
     { label: 'Documentation', href: '/docs' }
   ];
 

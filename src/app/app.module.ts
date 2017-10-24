@@ -19,7 +19,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
 import { FormsModule } from '@angular/forms';
-import { ConnectFourComponent } from './connect-four/connect-four.component';
 import { ConnectFourBoardComponent } from './connect-four-board/connect-four-board.component';
 import { SinglePlayerComponent } from './single-player/single-player.component';
 import { MultiPlayerComponent } from './multi-player/multi-player.component';
@@ -31,7 +30,6 @@ import 'hammerjs';
   declarations: [
     AppComponent,
     EditorComponent,
-    ConnectFourComponent,
     ConnectFourBoardComponent,
     ConnectFourDirective,
     SinglePlayerComponent,

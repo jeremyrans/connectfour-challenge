@@ -6,10 +6,10 @@ import { Route, RouterModule } from '@angular/router';
 
 /** Add routes for new angular component here, or as legacy components are replaced */
 export const routes: Route[] = [
-  { path: 'single-player', component: SinglePlayerComponent },
+  { path: 'practice', component: SinglePlayerComponent },
   { path: 'multi-player', component: MultiPlayerComponent },
   { path: 'docs', component: DocumentationComponent },
-  { path: '**', redirectTo: '/single-player' }
+  { path: '**', redirectTo: '/practice' }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
