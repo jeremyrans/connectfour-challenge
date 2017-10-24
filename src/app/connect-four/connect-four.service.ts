@@ -14,6 +14,7 @@ export class ConnectFourService {
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
   players: BehaviorSubject<Player[]> = new BehaviorSubject([]);
   currentPlayer = 1;
+  startingPlayer = 1;
 
 
   constructor(
@@ -24,8 +25,8 @@ export class ConnectFourService {
     this.players.next([new Player(), new Player()]);
   }
 
-  init(player1Id: string, player2Id: string, startPlayer: number) {
-    this.currentPlayer = startPlayer;
+  init(player1Id: string, player2Id: string, startingPlayer: number) {
+    this.setStartingPlayer(startingPlayer);
     this.players.getValue()[0] = this._getDefaultPlayer(player1Id);
     this.players.getValue()[1] = this._getDefaultPlayer(player2Id);
     this.players.next(this.players.getValue());
@@ -49,6 +50,11 @@ export class ConnectFourService {
     );
   }
 
+  setStartingPlayer(player: number): void {
+    this.startingPlayer = player;
+    this.currentPlayer = this.startingPlayer;
+  }
+
   private _getDefaultPlayer(id: string): Player {
     const p = new Player();
     p.id = id;
@@ -67,8 +73,8 @@ function(state) {
     return p;
   }
 
-  resetGame(): void {
-    this.currentPlayer = 1;
+  resetGame(startingPlayer: number): void {
+    this.setStartingPlayer(startingPlayer);
     this.gameState.next(new GameState());
   }
 
@@ -95,7 +101,8 @@ function(state) {
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
       const apiCopy = {};
       Object.assign(apiCopy, this._sandbox.api);
-      const playerMove = this.players.getValue()[this.currentPlayer - 1].getMove(this.gameState.getValue().board, apiCopy);
+      const player = this.players.getValue()[this.currentPlayer - 1];
+      const playerMove = player.getMove(this.gameState.getValue().board, apiCopy, this.currentPlayer === 2);
       const row = this._playMove(playerMove, this.currentPlayer);
       this.piecePlayed.next([row, playerMove, this.currentPlayer]);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;

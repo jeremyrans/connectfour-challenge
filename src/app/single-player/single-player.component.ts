@@ -4,6 +4,7 @@ import { PlayerService } from './../player/player.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameOverState } from '../game-state/game-state';
 import { Player } from '../player/player';
+import { ConnectFourBoardComponent } from '../connect-four-board/connect-four-board.component';
 
 @Component({
   selector: 'app-single-player',
@@ -13,6 +14,7 @@ import { Player } from '../player/player';
 export class SinglePlayerComponent implements OnInit {
 
   player = new Player();
+  selectedPosition = 'first';
   intervalTimer;
   gameSpeed = 0.5;
   @ViewChild(ConnectFourService) connectFourService: ConnectFourService;
@@ -33,8 +35,12 @@ export class SinglePlayerComponent implements OnInit {
     }
   }
 
+  selectedPositionNumber() {
+    return this.selectedPosition === 'first' ? 1 : 2;
+  }
+
   startGame(): void {
-    this.connectFourService.resetGame();
+    this.connectFourService.resetGame(this.selectedPositionNumber());
     this.setIntervalTimer(true);
   }
 
@@ -65,7 +71,7 @@ export class SinglePlayerComponent implements OnInit {
         if (user) {
           playerId = user.uid;
         }
-        this.connectFourService.init(playerId, 'ai-1', 1);
+        this.connectFourService.init(playerId, 'ai-1', this.selectedPositionNumber());
       }
     );
 
