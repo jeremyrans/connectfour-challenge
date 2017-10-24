@@ -1,7 +1,7 @@
 import { UserService } from './../user/user.service';
 import { ConnectFourService } from './../connect-four/connect-four.service';
 import { PlayerService } from './../player/player.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameOverState } from '../game-state/game-state';
 import { Player } from '../player/player';
 
@@ -15,10 +15,10 @@ export class SinglePlayerComponent implements OnInit {
   player = new Player();
   intervalTimer;
   gameSpeed = 0.5;
+  @ViewChild(ConnectFourService) connectFourService: ConnectFourService;
 
   constructor(
     private _playerService: PlayerService,
-    private _connectFourService: ConnectFourService,
     private _userService: UserService
   ) { }
 
@@ -34,7 +34,7 @@ export class SinglePlayerComponent implements OnInit {
   }
 
   startGame(): void {
-    this._connectFourService.resetGame();
+    this.connectFourService.resetGame();
     this.setIntervalTimer(true);
   }
 
@@ -51,8 +51,8 @@ export class SinglePlayerComponent implements OnInit {
   }
 
   private _playDelayedTurn(): void {
-    if (this._connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      this._connectFourService.playTurn();
+    if (this.connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
+      this.connectFourService.playTurn();
     } else {
       clearInterval(this.intervalTimer);
     }
@@ -65,11 +65,11 @@ export class SinglePlayerComponent implements OnInit {
         if (user) {
           playerId = user.uid;
         }
-        this._connectFourService.init(playerId, 'ai-1');
+        this.connectFourService.init(playerId, 'ai-1');
       }
     );
 
-    this._connectFourService.players.subscribe(
+    this.connectFourService.players.subscribe(
       players => {
         this.player = players[0];
       }

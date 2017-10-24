@@ -2,7 +2,6 @@ import { UserService } from './../user/user.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Player, BasePlayer } from './player';
 import { Injectable } from '@angular/core';
-import { BoardSpace } from '../game-state/game-state';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -15,6 +14,13 @@ export class PlayerService {
   getPlayer(id: string): Observable<BasePlayer> {
     if (id && this._userService.user) {
       return this._db.object('players/' + id).valueChanges();
+    }
+    return Observable.of(null);
+  }
+
+  getAllPlayers(): Observable<any[]> {
+    if (this._userService.user) {
+      return this._db.list('players').valueChanges();
     }
     return Observable.of(null);
   }

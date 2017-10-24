@@ -1,3 +1,23 @@
-<p>
-  coming soon
-</p>
+<h2></h2>
+<button mat-raised-button color="primary" (click)="startGame()">START</button>
+<mat-form-field>
+  <mat-select placeholder="Player 1" [(ngModel)]="player1">
+    <mat-option *ngFor="let player of playerList" [value]="player.id">
+      {{ player.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>    
+  <mat-select placeholder="Player 2" [(ngModel)]="player2">
+    <mat-option *ngFor="let player of playerList" [value]="player.id">
+      {{ player.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="10px">
+  <mat-card *ngFor="let game of games" style="height: 300px;">
+    <mat-card-content>
+      <app-connect-four-board #board appConnectFour [speed]="gameSpeed"></app-connect-four-board>
+    </mat-card-content>
+  </mat-card>
+</div>

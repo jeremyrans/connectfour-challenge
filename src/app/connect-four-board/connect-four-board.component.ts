@@ -28,7 +28,7 @@ export class ConnectFourBoardComponent implements OnInit {
     return this._canvasWidth / this.numCols;
   }
 
-  constructor(private _connectFourService: ConnectFourService, private route: ActivatedRoute) {
+  constructor(public connectFourService: ConnectFourService, private route: ActivatedRoute) {
 
   }
 
@@ -44,14 +44,14 @@ export class ConnectFourBoardComponent implements OnInit {
     this._pieceContext = this.pieceCanvasRef.nativeElement.getContext('2d');
 
     this._drawBoard();
-    this._connectFourService.piecePlayed.subscribe(
+    this.connectFourService.piecePlayed.subscribe(
       move => {
         if (move !== null) {
           this._drawPiece(this._pieceContext, move[0], move[1], move[2], true);
         }
       }
     );
-    this._connectFourService.gameState.subscribe(
+    this.connectFourService.gameState.subscribe(
       state => {
         if (state.gameOverState !== GameOverState.NOT_OVER) {
           this._drawPieces(state.board);
@@ -127,7 +127,6 @@ export class ConnectFourBoardComponent implements OnInit {
     const radius = this._gridSquareSize / 3;
     const color = this._getSpaceColor(space);
     let delta = (this.speed * 7) ** 2;
-    console.log(delta);
     delta = delta < 5 ? 5 : delta;
     let newY = startY + delta;
 

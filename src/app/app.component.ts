@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   navItems = [
     { label: 'Practice', href: '/practice' },
     { label: 'Multiplayer', href: '/multi-player' },
@@ -14,8 +14,4 @@ export class AppComponent implements OnInit {
   ];
 
   constructor() { }
-
-  ngOnInit(): void {
-    // console.log('Move:' + this._playerService.getMove());
-  }
 }
