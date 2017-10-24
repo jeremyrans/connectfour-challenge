@@ -7,5 +7,5 @@
       <button mat-raised-button color="primary" (click)="startGame()">START</button>
     </mat-card-actions>
   </mat-card>
-  <app-editor (saved)="setCode($event)" [code]="player1Code"></app-editor>
+  <app-editor (saved)="save($event)" [code]="player.code"></app-editor>
 </div>
