@@ -29,7 +29,11 @@ export class ConnectFourBoardComponent implements OnInit {
     this._connectFourService.gameState.subscribe((state) => {
       this._drawBoard(state);
       if (state.gameOverState !== GameOverState.NOT_OVER) {
-        this._drawMessage(state.gameOverState);
+        if (state.gameOverState === GameOverState.STALEMATE) {
+          this._drawMessage('Stalemate!');
+        } else {
+          this._drawMessage('Player ' + state.gameOverState + ' Wins!');
+        }
       }
     });
   }
