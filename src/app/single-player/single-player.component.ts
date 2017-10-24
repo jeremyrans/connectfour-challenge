@@ -39,17 +39,16 @@ export class SinglePlayerComponent implements OnInit {
 
   setIntervalTimer(): void {
     if (this.intervalTimer) {
-        clearInterval(this.intervalTimer);
-        this.intervalTimer = undefined;
+      clearInterval(this.intervalTimer);
+      this.intervalTimer = undefined;
     }
     this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), 100);
-  };
+  }
 
   private _playDelayedTurn(): void {
     if (this._connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
       this._connectFourService.playTurn();
-    }
-    else {
+    } else {
       clearInterval(this.intervalTimer);
     }
   }
