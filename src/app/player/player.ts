@@ -24,23 +24,9 @@ export class Player extends BasePlayer {
     this.photoURL = player.photoURL;
   }
 
-  getMove(state: BoardSpace[][], sandbox: any, normalize: boolean): number {
+  getMove(state: BoardSpace[][], sandbox: any): number {
     this._setGetMoveFunction(this.code);
-    let stateCopy = JSON.parse(JSON.stringify(state));
-    if (normalize) {
-      const normalizedState = [];
-      for (let i = 0; i < stateCopy.length; i++) {
-        normalizedState.push([]);
-        for (let j = 0; j < stateCopy[0].length; j++) {
-          if (stateCopy[i][j] === 0) {
-            normalizedState[i].push(0);
-          } else {
-            normalizedState[i].push(state[i][j] === 1 ? 2 : 1)
-          }
-        }
-      }
-      stateCopy = normalizedState;
-    }
+    const stateCopy = JSON.parse(JSON.stringify(state));
     return this._getMove.call(sandbox, stateCopy);
   }
 

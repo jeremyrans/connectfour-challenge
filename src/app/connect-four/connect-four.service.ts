@@ -102,7 +102,7 @@ function(state) {
       const apiCopy = {};
       Object.assign(apiCopy, this._sandbox.api);
       const player = this.players.getValue()[this.currentPlayer - 1];
-      const playerMove = player.getMove(this.gameState.getValue().board, apiCopy, this.currentPlayer === 2);
+      const playerMove = player.getMove(this.gameState.getValue().board, apiCopy);
       const row = this._playMove(playerMove, this.currentPlayer);
       this.piecePlayed.next([row, playerMove, this.currentPlayer]);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
