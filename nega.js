@@ -2,65 +2,44 @@ function getMove(state) {
   var self = this;
   var toDepth = 3;
 
-  var moveScores = [];
-  for (var i = 0; i < state[0].length; i++) {
-    if (!self.isValidMove(state, i)) {
-      moveScores.push(-100);
-      continue;
-    }
-    moveScores.push(minMax(self.applyMove(state, i, 1), toDepth, 1));
-  }
-  return moveScores.indexOf(Math.max(...moveScores));
+  // var moveScores = [];
+  // for (var i = 0; i < state[0].length; i++) {
+  //   if (!self.isValidMove(state, i)) {
+  //     moveScores.push(-100);
+  // moveScores.push(minMax(self.applyMove(state, i, 1), toDepth, 1));
+  //     continue;
+  //   }
+  // }
+  return minMax(state, toDepth, 1)[1];
 
   function minMax(s, depth, player) {
     var result = self.checkWin(s);
     switch (result) {
       case 1: {
-        return 10;
+        return [10, null];
       }
       case 2: {
-        return -10;
+        return [-10, null];
       }
     }
     if (depth === 0) {
-      return 0;
+      return [0, null];
     }
 
-    var bestValue;
+    var bestValue = -Number.MAX_VALUE;
     var bestMove;
-
-    if (player === 1) {
-      bestValue = Number.MAX_VALUE;
-      for (var j = 0; j < s[0].length; j++) {
-        if (!self.isValidMove(s, j)) {
-          continue;
-        }
-        var candidate = minMax(self.applyMove(s, j, 2), depth - 1, 2);
-        if (candidate < bestValue) {
-          bestValue = candidate;
-          bestMove = j;
-        }
+    for (var j = 0; j < s[0].length; j++) {
+      if (!self.isValidMove(s, j)) {
+        continue;
       }
-      // console.log("Player 1 BV: " + bestValue + " BM: " + bestMove);
-    } else {
-      bestValue = -Number.MAX_VALUE;
-      for (var j = 0; j < s[0].length; j++) {
-        if (!self.isValidMove(s, j)) {
-          continue;
-        }
-        var candidate = minMax(self.applyMove(s, j, 1), depth - 1, 1);
-        if (candidate > bestValue) {
-          bestValue = candidate;
-          bestMove = j;
-        }
+      var candidate = -minMax(self.applyMove(s, j, 2), depth - 1, player === 1 ? 2 : 1)[0];
+      if (candidate > bestValue) {
+        bestValue = candidate;
+        bestMove = j;
       }
-      // console.log("Player 2 BV: " + bestValue + " BM: " + bestMove);
     }
 
-    // console.log(s);
-    // console.log("");
-
-    return bestValue;
+    return [bestValue, bestMove];
   }
 }
 
