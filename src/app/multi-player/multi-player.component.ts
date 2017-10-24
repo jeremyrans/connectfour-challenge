@@ -72,7 +72,7 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     this.yellowPlayerWins = 0;
     let startPlayer = 1;
     this.connectFourBoards.forEach((board) => {
-      board.connectFourService.resetGame();
+      board.connectFourService.resetGame(startPlayer);
       board.connectFourService.init(this.redPlayer, this.yellowPlayer, startPlayer);
       startPlayer = startPlayer === 1 ? 2 : 1;
     });

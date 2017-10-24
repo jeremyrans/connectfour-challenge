@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ConnectFourService } from './connect-four/connect-four.service';
 import { ConnectFourDirective } from './connect-four/connect-four.directive';
 import { PlayerService } from './player/player.service';
-import { MatCardModule, MatButtonModule, MatSliderModule, MatToolbarModule, MatSelectModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatSliderModule, MatToolbarModule, MatSelectModule, MatRadioModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -48,6 +48,7 @@ import 'hammerjs';
     MatButtonModule,
     MatSliderModule,
     MatSelectModule,
+    MatRadioModule,
     MatToolbarModule,
     RouterModule,
     routing,
