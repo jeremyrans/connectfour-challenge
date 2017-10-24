@@ -1,5 +1,16 @@
 <div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="10px">
   <mat-card style="height: 350px;">
+    <mat-card-header>
+      <span style="line-height: 50px;">Game Speed:</span>
+      <mat-slider style="width: 65%;"
+        (change)="setIntervalTimer(false)"
+        max="1"
+        min="0"
+        step="0.05"
+        [value]="gameSpeed"
+        [(ngModel)]="gameSpeed">
+      </mat-slider>
+    </mat-card-header>
     <mat-card-content>
       <app-connect-four></app-connect-four>
     </mat-card-content>

@@ -14,6 +14,7 @@ export class SinglePlayerComponent implements OnInit {
 
   player = new Player();
   intervalTimer;
+  gameSpeed = 0.5;
 
   constructor(
     private _playerService: PlayerService,
@@ -34,15 +35,19 @@ export class SinglePlayerComponent implements OnInit {
 
   startGame(): void {
     this._connectFourService.resetGame();
-    this.setIntervalTimer();
+    this.setIntervalTimer(true);
   }
 
-  setIntervalTimer(): void {
+  setIntervalTimer(startGame: boolean): void {
     if (this.intervalTimer) {
       clearInterval(this.intervalTimer);
       this.intervalTimer = undefined;
+      startGame = true;
     }
-    this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), 100);
+
+    if (startGame) {
+      this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), (1 - this.gameSpeed) * 1000);
+    }
   }
 
   private _playDelayedTurn(): void {

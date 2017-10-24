@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { ConnectFourService } from './connect-four/connect-four.service';
 import { ConnectFourDirective } from './connect-four/connect-four.directive';
 import { PlayerService } from './player/player.service';
-import { MatCardModule, MatButtonModule, MatToolbarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatSliderModule, MatToolbarModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -25,7 +26,7 @@ import { MultiPlayerComponent } from './multi-player/multi-player.component';
 import { NavComponent } from './nav/nav.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { DocumentationComponent } from './documentation/documentation.component';
-
+import 'hammerjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,10 +42,12 @@ import { DocumentationComponent } from './documentation/documentation.component'
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AceEditorModule,
     FormsModule,
     MatCardModule,
     MatButtonModule,
+    MatSliderModule,
     MatToolbarModule,
     RouterModule,
     routing,
