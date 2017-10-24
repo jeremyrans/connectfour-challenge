@@ -1,6 +1,7 @@
 import { GameState, BoardSpace, GameOverState } from './../game-state/game-state';
 import { ConnectFourService } from './../connect-four/connect-four.service';
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-connect-four-board',
@@ -12,6 +13,7 @@ export class ConnectFourBoardComponent implements OnInit {
   @Input() numCols = 7;
   private _canvasHeight = 300;
   private _canvasWidth = 350;
+  classicTheme = false;
 
   @ViewChild('gameCanvas') canvasRef: ElementRef;
   private _context: CanvasRenderingContext2D;
@@ -20,11 +22,18 @@ export class ConnectFourBoardComponent implements OnInit {
     return this._canvasWidth / this.numCols;
   }
 
-  constructor(private _connectFourService: ConnectFourService) {
+  constructor(private _connectFourService: ConnectFourService, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(
+      (params: any) => {
+          if (params.hasOwnProperty('classic')) {
+              this.classicTheme = true;
+          }
+      }
+    );
     this._context = this.canvasRef.nativeElement.getContext('2d');
     this._connectFourService.gameState.subscribe((state) => {
       this._drawBoard(state);
@@ -60,7 +69,7 @@ export class ConnectFourBoardComponent implements OnInit {
         color = 'red';
         break;
       case BoardSpace.PLAYER_2:
-        color = 'yellow';
+        color = this.classicTheme ? 'black' : 'yellow';
         break;
     }
 
@@ -105,7 +114,7 @@ export class ConnectFourBoardComponent implements OnInit {
 
   private _drawMessage(message): void {
     if (message !== undefined) {
-      this._context.fillStyle = '#000';
+      this._context.fillStyle = '#FFF';
       this._context.strokeStyle = '#888';
       this._context.font = (this._canvasHeight / 10) + 'px Impact';
       this._context.textAlign = 'center';
