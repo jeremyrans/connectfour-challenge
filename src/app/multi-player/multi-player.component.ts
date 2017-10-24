@@ -1,29 +1,42 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { ConnectFourService } from '../connect-four/connect-four.service';
 import { ConnectFourBoardComponent } from '../connect-four-board/connect-four-board.component';
 import { GameOverState } from '../game-state/game-state';
 import { PlayerService } from '../player/player.service';
 import { UserService } from '../user/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-multi-player',
   templateUrl: './multi-player.component.html',
   styleUrls: ['./multi-player.component.css']
 })
-export class MultiPlayerComponent implements OnInit {
+export class MultiPlayerComponent implements OnInit, AfterViewInit {
   numGames = 5;
   games = [];
   gameSpeed = 0.5;
   intervalTimer;
   playerList = [];
-  player1 = '';
-  player2 = '';
+  redPlayer = '';
+  redPlayerWins = 0;
+  yellowPlayer = '';
+  yellowPlayerWins = 0;
+
+  secondColour = 'Yellow';
 
   @ViewChildren('board') connectFourBoards: QueryList<ConnectFourBoardComponent>;
 
-  constructor(private _playerService: PlayerService, private _userService: UserService) { }
+  constructor(private _playerService: PlayerService, private _userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(
+      (params: any) => {
+        if (params.hasOwnProperty('classic')) {
+          this.secondColour = 'Black';
+        }
+      }
+    );
+
     this.games = new Array(this.numGames);
 
     this._userService.userObservable.subscribe(
@@ -41,11 +54,25 @@ export class MultiPlayerComponent implements OnInit {
     );
   }
 
+  ngAfterViewInit() {
+    this.connectFourBoards.forEach((board) => {
+      board.connectFourService.gameState.subscribe((state) => {
+        if (state.gameOverState === GameOverState.PLAYER_1_WIN) {
+          this.redPlayerWins++;
+        } else if (state.gameOverState === GameOverState.PLAYER_2_WIN) {
+          this.yellowPlayerWins++;
+        }
+      });
+    });
+  }
+
 
   startGame(): void {
+    this.redPlayerWins = 0;
+    this.yellowPlayerWins = 0;
     this.connectFourBoards.forEach((board) => {
       board.connectFourService.resetGame();
-      board.connectFourService.init(this.player1, this.player2);
+      board.connectFourService.init(this.redPlayer, this.yellowPlayer);
     });
     this.setIntervalTimer(true);
   }

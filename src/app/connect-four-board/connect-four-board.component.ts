@@ -58,7 +58,8 @@ export class ConnectFourBoardComponent implements OnInit {
           if (state.gameOverState === GameOverState.STALEMATE) {
             this._drawMessage(this._boardContext, 'Stalemate!');
           } else {
-            this._drawMessage(this._boardContext, 'Player ' + state.gameOverState + ' Wins!');
+            this._drawMessage(this._boardContext,
+              (state.gameOverState === 1 ? 'Red' : this.classicTheme ? 'Black' : 'Yellow') + ' Player Wins!');
           }
         } else if (this._lastGameOverState !== GameOverState.NOT_OVER) {
           this._reset();

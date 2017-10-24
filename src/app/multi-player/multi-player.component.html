@@ -1,19 +1,37 @@
-<h2></h2>
-<button mat-raised-button color="primary" (click)="startGame()">START</button>
-<mat-form-field>
-  <mat-select placeholder="Player 1" [(ngModel)]="player1">
-    <mat-option *ngFor="let player of playerList" [value]="player.id">
-      {{ player.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field>    
-  <mat-select placeholder="Player 2" [(ngModel)]="player2">
-    <mat-option *ngFor="let player of playerList" [value]="player.id">
-      {{ player.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="10px">
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Red Player" [(ngModel)]="redPlayer">
+        <mat-option *ngFor="let player of playerList" [value]="player.id">
+          {{ player.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>Wins: {{ redPlayerWins }}</div>
+  </div>
+  <div>
+    <mat-form-field>    
+      <mat-select placeholder="{{ secondColour }} Player" [(ngModel)]="yellowPlayer">
+        <mat-option *ngFor="let player of playerList" [value]="player.id">
+          {{ player.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>Wins: {{ yellowPlayerWins }}</div>
+  </div>
+  <div style="width: 50%;">
+    <button mat-raised-button color="primary" (click)="startGame()" style="margin: 0 20px;">START</button>
+    <span style="line-height: 50px;">Game Speed:</span>
+    <mat-slider style="width: 25%;" 
+      (change)="setIntervalTimer(false)" 
+      max="1" 
+      min="0" 
+      step="0.05" 
+      [value]="gameSpeed" 
+      [(ngModel)]="gameSpeed">
+    </mat-slider>
+  </div>
+</div>
 <div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="10px">
   <mat-card *ngFor="let game of games" style="height: 300px;">
     <mat-card-content>
