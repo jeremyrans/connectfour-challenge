@@ -102,7 +102,22 @@ function(state) {
       const apiCopy = {};
       Object.assign(apiCopy, this._sandbox.api);
       const player = this.players.getValue()[this.currentPlayer - 1];
-      const playerMove = player.getMove(this.gameState.getValue().board, apiCopy);
+      let stateCopy = JSON.parse(JSON.stringify(this.gameState.getValue().board));
+      if (this.currentPlayer === 2) {
+        const normalizedState = [];
+        for (let i = 0; i < stateCopy.length; i++) {
+          normalizedState.push([]);
+          for (let j = 0; j < stateCopy[0].length; j++) {
+            if (stateCopy[i][j] === 0) {
+              normalizedState[i].push(0);
+            } else {
+              normalizedState[i].push(stateCopy[i][j] === 1 ? 2 : 1)
+            }
+          }
+        }
+        stateCopy = normalizedState;
+      }
+      const playerMove = player.getMove(stateCopy, apiCopy);
       const row = this._playMove(playerMove, this.currentPlayer);
       this.piecePlayed.next([row, playerMove, this.currentPlayer]);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;

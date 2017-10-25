@@ -26,8 +26,7 @@ export class Player extends BasePlayer {
 
   getMove(state: BoardSpace[][], sandbox: any): number {
     this._setGetMoveFunction(this.code);
-    const stateCopy = JSON.parse(JSON.stringify(state));
-    return this._getMove.call(sandbox, stateCopy);
+    return this._getMove.call(sandbox, state);
   }
 
   // because we can't save methods to firebase
