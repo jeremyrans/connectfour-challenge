@@ -117,7 +117,7 @@ function(state) {
         }
         stateCopy = normalizedState;
       }
-      const playerMove = player.getMove(stateCopy, apiCopy);
+      const playerMove = player.getMove(stateCopy, this.currentPlayer === this.startingPlayer, apiCopy);
       const row = this._playMove(playerMove, this.currentPlayer);
       this.piecePlayed.next([row, playerMove, this.currentPlayer]);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;

@@ -9,7 +9,7 @@ export class BasePlayer {
 }
 
 export class Player extends BasePlayer {
-  private _getMove(state: BoardSpace[][]): number {
+  private _getMove(state: BoardSpace[][], isStartingPlayer: boolean): number {
     return 0;
   }
 
@@ -24,9 +24,9 @@ export class Player extends BasePlayer {
     this.photoURL = player.photoURL;
   }
 
-  getMove(state: BoardSpace[][], sandbox: any): number {
+  getMove(state: BoardSpace[][], isStartingPlayer: boolean, sandbox: any): number {
     this._setGetMoveFunction(this.code);
-    return this._getMove.call(sandbox, state);
+    return this._getMove.call(sandbox, state, isStartingPlayer);
   }
 
   // because we can't save methods to firebase

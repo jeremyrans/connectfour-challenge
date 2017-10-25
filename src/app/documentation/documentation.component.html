@@ -16,8 +16,8 @@
 
     <h2>State</h2>
     <p>
-      The state passed to your function is a 2d array representing the board. More specifically, state is an array of rows and
-      each row is an array of the columns in that row. The possible state of each cell is the integer 0, 1 or 2.
+      The first argument passed to your function is a 2d array representing the state of the board. More specifically, 
+      state is an array of rows and each row is an array of the columns in that row. The possible state of each cell is the integer 0, 1 or 2.
     </p>
     <ul>
       <li>0 is an empty cell</li>
@@ -34,6 +34,12 @@
         [0,1,0,0,0,0,0],
         [1,2,2,1,0,0,0],
       ]</pre>
+      
+    <h2>isStartingPlayer</h2>
+    <p>
+      The second argument passed to your function is a boolean representing whether or not you are the starting player in the game. 
+      True indicates that you have taken your turn first, while false indicates your turn comes second.
+    </p>
 
     <h2>Syntax</h2>
     <p>
@@ -41,7 +47,7 @@
       <strong>must</strong> be in the following syntax in order to work:
     </p>
     <pre style="border: 1px solid #666; background-color: #EEE; padding: 10px;">
-function getMove(state) {{'{'}}
+function getMove(state, isStartingPlayer) {{'{'}}
   return 0;  // index of the column to drop a piece in
 {{'}'}}</pre>
     <p>
