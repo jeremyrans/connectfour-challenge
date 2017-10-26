@@ -1,23 +1,34 @@
 <div fxLayout="row wrap" fxLayoutGap="10px">
   <div>
-    <mat-radio-group [(ngModel)]="selectedPosition">
-      <mat-radio-button value="first">Go First</mat-radio-button>
-      <mat-radio-button value="second">Go Second</mat-radio-button>
-    </mat-radio-group>
-    <span style="float: right;">(Always Red)</span>
-    <mat-card style="height: 400px;">
-      <mat-card-header>
-        <span style="line-height: 50px;">Game Speed:</span>
-        <mat-slider style="width: 65%;" (change)="setIntervalTimer(false)" max="1" min="0" step="0.05" [value]="gameSpeed" [(ngModel)]="gameSpeed">
-        </mat-slider>
-      </mat-card-header>
+    <mat-card style="height: 350px;">
       <mat-card-content>
         <app-connect-four-board #board appConnectFour [speed]="gameSpeed"></app-connect-four-board>
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button color="primary" (click)="startGame()">START</button>
+        <mat-form-field style="float: right; top: -10px;">
+          <mat-select placeholder="Difficulty" [(ngModel)]="difficulty" value="ai-1" (change)="initializeGame()">
+            <mat-option value="ai-1">Easy</mat-option>
+            <mat-option value="ai-2">Medium</mat-option>
+            <mat-option value="ai-3">Hard</mat-option>
+          </mat-select>
+        </mat-form-field>
       </mat-card-actions>
     </mat-card>
+    <br/>
+    <mat-card style="padding: 10px 20px">
+      <span style="line-height: 50px;">Speed:</span>
+      <mat-slider style="width: 84%;" (change)="setIntervalTimer(false)" max="1" min="0" step="0.05" [value]="gameSpeed" [(ngModel)]="gameSpeed">
+      </mat-slider>
+    </mat-card>
+    <br/>
+    <mat-card>
+      <span style="float: right; ">(Always Red)</span>
+      <mat-radio-group [(ngModel)]="selectedPosition">
+        <mat-radio-button value="first" style="margin-right: 10px">Go First</mat-radio-button>
+        <mat-radio-button value="second">Go Second</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
   </div>
-  <app-editor (saved)="save($event)" [code]="player.code"></app-editor>
+  <app-editor (saved)="save($event) " [code]="player.code "></app-editor>
 </div>

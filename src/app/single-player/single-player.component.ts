@@ -17,6 +17,8 @@ export class SinglePlayerComponent implements OnInit {
   selectedPosition = 'first';
   intervalTimer;
   gameSpeed = 0.5;
+  difficulty = 'ai-1';
+
   @ViewChild(ConnectFourService) connectFourService: ConnectFourService;
 
   constructor(
@@ -71,7 +73,7 @@ export class SinglePlayerComponent implements OnInit {
         if (user) {
           playerId = user.uid;
         }
-        this.connectFourService.init(playerId, 'ai-1', this.selectedPositionNumber());
+        this.initializeGame(playerId);
       }
     );
 
@@ -80,6 +82,13 @@ export class SinglePlayerComponent implements OnInit {
         this.player = players[0];
       }
     );
+  }
+
+  initializeGame(playerId?: string): void {
+    if (!playerId) {
+      playerId = this.player.id;
+    }
+    this.connectFourService.init(playerId, this.difficulty, this.selectedPositionNumber());
   }
 
 }

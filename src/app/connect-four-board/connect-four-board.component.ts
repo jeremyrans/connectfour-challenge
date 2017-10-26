@@ -47,7 +47,7 @@ export class ConnectFourBoardComponent implements OnInit {
     this.connectFourService.piecePlayed.subscribe(
       move => {
         if (move !== null) {
-          this._drawPiece(this._pieceContext, move[0], move[1], move[2], true);
+          this._drawPiece(this._pieceContext, move[0], move[1], move[2], false);
         }
       }
     );
