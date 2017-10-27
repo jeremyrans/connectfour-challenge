@@ -16,8 +16,9 @@
 
     <h2>State</h2>
     <p>
-      The first argument passed to your function is a 2d array representing the state of the board. More specifically, 
-      state is an array of rows and each row is an array of the columns in that row. The possible state of each cell is the integer 0, 1 or 2.
+      The first argument passed to your function is a 2d array representing the state of the board. More specifically, state is
+      an array of rows and each row is an array of the columns in that row. The possible state of each cell is the integer
+      0, 1 or 2.
     </p>
     <ul>
       <li>0 is an empty cell</li>
@@ -34,10 +35,10 @@
         [0,1,0,0,0,0,0],
         [1,2,2,1,0,0,0],
       ]</pre>
-      
+
     <h2>isStartingPlayer</h2>
     <p>
-      The second argument passed to your function is a boolean representing whether or not you are the starting player in the game. 
+      The second argument passed to your function is a boolean representing whether or not you are the starting player in the game.
       True indicates that you have taken your turn first, while false indicates your turn comes second.
     </p>
 
@@ -94,7 +95,13 @@ function getMove(state, isStartingPlayer) {{'{'}}
           <br/>player: integer value of the player making the move, 1 (you) or 2 (opponent)
         </td>
         <td>int[][]</td>
-        <td>Takes a 2d array representing a board state, the column to play a piece in, and the player to play </td>
+        <td>Use to simulate a move and get the resulting state</td>
+      </tr>
+      <tr>
+        <td>this.getValidMoves(state)</td>
+        <td>state: 2d integer array representing a board state</td>
+        <td>int[]</td>
+        <td>Use to get all valid moves for the given board state</td>
       </tr>
     </table>
   </mat-card-content>

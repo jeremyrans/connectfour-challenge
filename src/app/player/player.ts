@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { BoardSpace } from '../game-state/game-state';
 
 export class BasePlayer {
@@ -9,12 +11,15 @@ export class BasePlayer {
 }
 
 export class Player extends BasePlayer {
-  private _getMove(state: BoardSpace[][], isStartingPlayer: boolean): number {
-    return 0;
-  }
+  worker: any = new Worker('worker.js');
+  moveCallback: (n: number) => void;
 
   private _setGetMoveFunction(code: string): void {
-    eval('this._getMove = ' + code + ';');
+    this.worker.postMessage({ command: 'code', value: code });
+
+    this.worker.onmessage = function (message) {
+      this.moveCallback(message.data);
+    }.bind(this);
   }
 
   updateFrom(player: BasePlayer): void {
@@ -24,9 +29,10 @@ export class Player extends BasePlayer {
     this.photoURL = player.photoURL;
   }
 
-  getMove(state: BoardSpace[][], isStartingPlayer: boolean, sandbox: any): number {
+  getMove(state: BoardSpace[][], callback: (m: number) => void): void {
     this._setGetMoveFunction(this.code);
-    return this._getMove.call(sandbox, state, isStartingPlayer);
+    this.worker.postMessage({ command: 'getMove', value: state });
+    this.moveCallback = callback;
   }
 
   // because we can't save methods to firebase

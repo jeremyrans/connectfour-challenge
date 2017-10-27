@@ -9,6 +9,7 @@ export class SandboxService {
     checkWin: this.checkWin,
     isValidMove: this.isValidMove,
     applyMove: this.applyMove,
+    getValidMoves: this.getValidMoves,
     _boardSpaceToGameOverState: this._boardSpaceToGameOverState
   };
 
@@ -83,5 +84,15 @@ export class SandboxService {
     }
 
     return newBoard;
+  }
+
+  getValidMoves(board: BoardSpace[][]): number[] {
+    const validMoves = [];
+    for (let i = 0; i < board[0].length; i++) {
+      if (board[0][i] === BoardSpace.EMPTY) {
+        validMoves.push(i);
+      }
+    }
+    return validMoves;
   }
 }

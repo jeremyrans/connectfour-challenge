@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "connectfour-challenge"
+    "name": "connectfour-challenge",
+    "ejected": true
   },
   "apps": [
     {
@@ -58,6 +59,7 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {
+    }
   }
 }

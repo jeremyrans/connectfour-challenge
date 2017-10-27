@@ -1,3 +1,4 @@
+import { GameState } from './../game-state/game-state';
 import { UserService } from './../user/user.service';
 import { ConnectFourService } from './../connect-four/connect-four.service';
 import { PlayerService } from './../player/player.service';
@@ -5,6 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameOverState } from '../game-state/game-state';
 import { Player } from '../player/player';
 import { ConnectFourBoardComponent } from '../connect-four-board/connect-four-board.component';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-single-player',
@@ -18,6 +20,7 @@ export class SinglePlayerComponent implements OnInit {
   intervalTimer;
   gameSpeed = 0.5;
   difficulty = 'ai-1';
+  prevSum = -1;
 
   @ViewChild(ConnectFourService) connectFourService: ConnectFourService;
 
@@ -41,29 +44,15 @@ export class SinglePlayerComponent implements OnInit {
     return this.selectedPosition === 'first' ? 1 : 2;
   }
 
+  private _playNextTurn(): void {
+    this.connectFourService.playTurn(() => {
+      setTimeout(this._playNextTurn.bind(this), (1 - this.gameSpeed) * 1000);
+    });
+  }
+
   startGame(): void {
     this.connectFourService.resetGame(this.selectedPositionNumber());
-    this.setIntervalTimer(true);
-  }
-
-  setIntervalTimer(startGame: boolean): void {
-    if (this.intervalTimer) {
-      clearInterval(this.intervalTimer);
-      this.intervalTimer = undefined;
-      startGame = true;
-    }
-
-    if (startGame) {
-      this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), (1 - this.gameSpeed) * 1000);
-    }
-  }
-
-  private _playDelayedTurn(): void {
-    if (this.connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      this.connectFourService.playTurn();
-    } else {
-      clearInterval(this.intervalTimer);
-    }
+    this._playNextTurn();
   }
 
   ngOnInit() {
@@ -79,7 +68,9 @@ export class SinglePlayerComponent implements OnInit {
 
     this.connectFourService.players.subscribe(
       players => {
-        this.player = players[0];
+        if (!this.player.id) {
+          this.player = players[0];
+        }
       }
     );
   }

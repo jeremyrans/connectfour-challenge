@@ -6,6 +6,7 @@ import { Player } from './../player/player';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GameState, GameOverState, BoardSpace } from './../game-state/game-state';
 import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class ConnectFourService {
@@ -13,6 +14,7 @@ export class ConnectFourService {
   piecePlayed: BehaviorSubject<[number, number, number]> = new BehaviorSubject(null);
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
   players: BehaviorSubject<Player[]> = new BehaviorSubject([]);
+
   currentPlayer = 1;
   startingPlayer = 1;
 
@@ -94,13 +96,12 @@ function(state) {
     } else {
       this.gameState.getValue().gameOverState = player === 1 ? GameOverState.PLAYER_2_WIN : GameOverState.PLAYER_1_WIN;
     }
+    this.gameState.next(this.gameState.getValue());
     return playedRow;
   }
 
-  playTurn(): void {
+  playTurn(callback: () => any): void {
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-      const apiCopy = {};
-      Object.assign(apiCopy, this._sandbox.api);
       const player = this.players.getValue()[this.currentPlayer - 1];
       let stateCopy = JSON.parse(JSON.stringify(this.gameState.getValue().board));
       if (this.currentPlayer === 2) {
@@ -111,17 +112,21 @@ function(state) {
             if (stateCopy[i][j] === 0) {
               normalizedState[i].push(0);
             } else {
-              normalizedState[i].push(stateCopy[i][j] === 1 ? 2 : 1)
+              normalizedState[i].push(stateCopy[i][j] === 1 ? 2 : 1);
             }
           }
         }
         stateCopy = normalizedState;
       }
-      const playerMove = player.getMove(stateCopy, this.currentPlayer === this.startingPlayer, apiCopy);
-      const row = this._playMove(playerMove, this.currentPlayer);
-      this.piecePlayed.next([row, playerMove, this.currentPlayer]);
-      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-      this.gameState.next(this.gameState.getValue());
+
+      player.getMove(stateCopy,
+        m => {
+          const row = this._playMove(m, this.currentPlayer);
+          this.piecePlayed.next([row, m, this.currentPlayer]);
+          this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+          callback();
+        }
+      );
     }
   }
 }

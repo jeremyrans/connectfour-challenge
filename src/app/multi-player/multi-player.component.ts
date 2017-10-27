@@ -45,7 +45,7 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
           this._playerService.getAllPlayers().subscribe(
             players => {
               this.playerList = players.map(player => {
-                return {name: player.name, id: player.id};
+                return { name: player.name, id: player.id };
               });
             }
           );
@@ -66,7 +66,6 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   startGame(): void {
     this.redPlayerWins = 0;
     this.yellowPlayerWins = 0;
@@ -76,33 +75,24 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
       board.connectFourService.init(this.redPlayer, this.yellowPlayer, startPlayer);
       startPlayer = startPlayer === 1 ? 2 : 1;
     });
-    this.setIntervalTimer(true);
+    this._playNextTurn();
   }
 
-  setIntervalTimer(startGame: boolean): void {
-    if (this.intervalTimer) {
-      clearInterval(this.intervalTimer);
-      this.intervalTimer = undefined;
-      startGame = true;
-    }
+  private _playNextTurn(): void {
+    const playableBoards = this.connectFourBoards.filter(
+      b => b.connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER
+    );
+    let turns = playableBoards.length;
 
-    if (startGame) {
-      this.intervalTimer = setInterval(this._playDelayedTurn.bind(this), (1 - this.gameSpeed) * 1000);
-    }
-  }
-
-  private _playDelayedTurn(): void {
-    let allGameOvers = true;
-    this.connectFourBoards.forEach((board) => {
-      if (board.connectFourService.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
-        allGameOvers = false;
-        board.connectFourService.playTurn();
+    playableBoards.forEach(
+      board => {
+        board.connectFourService.playTurn(() => {
+          turns -= 1;
+          if (turns === 0) {
+            setTimeout(this._playNextTurn.bind(this), (1 - this.gameSpeed) * 1000);
+          }
+        });
       }
-    });
-
-    if (allGameOvers) {
-      clearInterval(this.intervalTimer);
-    }
+    );
   }
-
 }
