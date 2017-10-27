@@ -1,3 +1,4 @@
+import { Player } from './../player/player';
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { ConnectFourService } from '../connect-four/connect-four.service';
 import { ConnectFourBoardComponent } from '../connect-four-board/connect-four-board.component';
@@ -17,11 +18,10 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
   gameSpeed = 0.5;
   intervalTimer;
   playerList = [];
-  redPlayer = '';
+  redPlayer: Player;
   redPlayerWins = 0;
-  yellowPlayer = '';
+  yellowPlayer: Player;
   yellowPlayerWins = 0;
-
   secondColour = 'Yellow';
 
   @ViewChildren('board') connectFourBoards: QueryList<ConnectFourBoardComponent>;
@@ -45,7 +45,7 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
           this._playerService.getAllPlayers().subscribe(
             players => {
               this.playerList = players.map(player => {
-                return { name: player.name, id: player.id };
+                return { name: player.name, id: player.id, photoURL: player.photoURL };
               });
             }
           );
@@ -72,7 +72,7 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     let startPlayer = 1;
     this.connectFourBoards.forEach((board) => {
       board.connectFourService.resetGame(startPlayer);
-      board.connectFourService.init(this.redPlayer, this.yellowPlayer, startPlayer);
+      board.connectFourService.init(this.redPlayer.name, this.yellowPlayer.name, startPlayer);
       startPlayer = startPlayer === 1 ? 2 : 1;
     });
     this._playNextTurn();

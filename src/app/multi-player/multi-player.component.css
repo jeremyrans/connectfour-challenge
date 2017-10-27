@@ -1,0 +1,27 @@
+.player .mat-card-title {
+  margin-top: -15px;
+  margin-bottom: 0;
+}
+
+.player .mat-form-field {
+  width: auto; 
+  font-size: 20px;
+}
+
+.player .mat-card-footer {
+  text-align: center; 
+  font-size: 20px;
+  font-weight: bold; 
+  padding-bottom: 10px;
+}
+
+.player img {
+  width: 50%;
+  border-radius: 50%;
+  border: 5px solid;
+}
+
+.controls {
+  text-align: center;
+}
+

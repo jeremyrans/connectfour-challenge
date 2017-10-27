@@ -12,9 +12,9 @@ export class ConnectFourBoardComponent implements OnInit {
   @Input() numRows = 6;
   @Input() numCols = 7;
   @Input() speed = 0.5;
+  @Input() width = 350;
+  @Input() height = 300;
 
-  private _canvasHeight = 300;
-  private _canvasWidth = 350;
   classicTheme = false;
 
   @ViewChild('boardCanvas') boardCanvasRef: ElementRef;
@@ -25,7 +25,7 @@ export class ConnectFourBoardComponent implements OnInit {
   private _lastGameOverState = GameOverState.NOT_OVER;
 
   private get _gridSquareSize(): number {
-    return this._canvasWidth / this.numCols;
+    return this.width / this.numCols;
   }
 
   constructor(public connectFourService: ConnectFourService, private route: ActivatedRoute) {
@@ -112,7 +112,7 @@ export class ConnectFourBoardComponent implements OnInit {
   }
 
   private _drawBoard(): void {
-    this._drawRect(this._boardContext, 0, 0, this._canvasWidth, this._canvasHeight, this.classicTheme ? '#FDDD41' : 'blue');
+    this._drawRect(this._boardContext, 0, 0, this.width, this.height, this.classicTheme ? '#FDDD41' : 'blue');
 
     this._boardContext.globalCompositeOperation = 'destination-out';
     for (let i = 0; i < this.numRows; i++) {
@@ -170,10 +170,10 @@ export class ConnectFourBoardComponent implements OnInit {
     if (message !== undefined) {
       context.fillStyle = '#FFF';
       context.strokeStyle = '#888';
-      context.font = (this._canvasHeight / 10) + 'px Impact';
+      context.font = (this.height / 10) + 'px Impact';
       context.textAlign = 'center';
-      context.fillText(message, this._canvasWidth / 2, this._canvasHeight / 2);
-      context.strokeText(message, this._canvasWidth / 2, this._canvasHeight / 2);
+      context.fillText(message, this.width / 2, this.height / 2);
+      context.strokeText(message, this.width / 2, this.height / 2);
     }
   }
 
@@ -185,6 +185,6 @@ export class ConnectFourBoardComponent implements OnInit {
   }
 
   private _clear(context): void {
-    context.clearRect(0, 0, this._canvasWidth, this._canvasHeight);
+    context.clearRect(0, 0, this.width, this.height);
   }
 }
