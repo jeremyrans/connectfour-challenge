@@ -1,6 +1,6 @@
 import { GameState, BoardSpace, GameOverState } from './../game-state/game-state';
 import { ConnectFourService } from './../connect-four/connect-four.service';
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './connect-four-board.component.html',
   styleUrls: ['./connect-four-board.component.css']
 })
-export class ConnectFourBoardComponent implements OnInit {
+export class ConnectFourBoardComponent implements OnInit, AfterViewInit {
   @Input() numRows = 6;
   @Input() numCols = 7;
   @Input() speed = 0.5;
@@ -40,10 +40,14 @@ export class ConnectFourBoardComponent implements OnInit {
         }
       }
     );
+
+    this.boardCanvasRef.nativeElement.width = this.width;
+    this.boardCanvasRef.nativeElement.height = this.height;
+    this.pieceCanvasRef.nativeElement.height = this.height;
+    this.pieceCanvasRef.nativeElement.height = this.height;
     this._boardContext = this.boardCanvasRef.nativeElement.getContext('2d');
     this._pieceContext = this.pieceCanvasRef.nativeElement.getContext('2d');
 
-    this._drawBoard();
     this.connectFourService.piecePlayed.subscribe(
       move => {
         if (move !== null) {
@@ -68,6 +72,10 @@ export class ConnectFourBoardComponent implements OnInit {
         this._lastGameOverState = state.gameOverState;
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    this._drawBoard();
   }
 
   private _getSpaceColor(space: BoardSpace): string {

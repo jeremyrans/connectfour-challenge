@@ -10,8 +10,9 @@
           </mat-select>
         </mat-form-field>
       </mat-card-title>
-      <mat-card-content fxLayout="row" fxLayoutAlign="space-around center" *ngIf="redPlayer && redPlayer.photoURL">
-        <img src="{{redPlayer && redPlayer.photoURL ? redPlayer.photoURL : ''}}" style="border-color: red;">
+      <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
+        <img src="{{redPlayer && redPlayer.photoURL ? redPlayer.photoURL : 'https://image.flaticon.com/icons/svg/53/53172.svg'}}"
+          style="border-color: red;">
       </mat-card-content>
       <mat-card-footer>
         Wins: {{ redPlayerWins }}
@@ -22,7 +23,7 @@
       <mat-card-content>
         <div>
           <span style="line-height: 50px;">Speed:</span>
-          <mat-slider style="width: 84%;" (change)="setIntervalTimer(false)" max="1" min="0" step="0.05" [value]="gameSpeed" [(ngModel)]="gameSpeed">
+          <mat-slider style="width: 84%;" max="1" min="0" step="0.05" [value]="gameSpeed" [(ngModel)]="gameSpeed">
           </mat-slider>
         </div>
       </mat-card-content>
@@ -41,8 +42,9 @@
           </mat-select>
         </mat-form-field>
       </mat-card-title>
-      <mat-card-content fxLayout="row" fxLayoutAlign="space-around center" *ngIf="yellowPlayer && yellowPlayer.photoURL">
-        <img src="{{yellowPlayer && yellowPlayer.photoURL ? yellowPlayer.photoURL : ''}}" [style.borderColor]="secondColour">
+      <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
+        <img src="{{yellowPlayer && yellowPlayer.photoURL ? yellowPlayer.photoURL : 'https://image.flaticon.com/icons/svg/53/53172.svg'}}"
+          [style.borderColor]="secondColour">
       </mat-card-content>
       <mat-card-footer>
         Wins: {{ yellowPlayerWins }}
@@ -50,8 +52,8 @@
     </mat-card>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start top" fxLayoutGap="10px">
-    <mat-card *ngFor="let game of games" style="height: 300px;">
+  <div fxLayout="row wrap" fxLayoutAlign="center top" fxLayoutGap="20px">
+    <mat-card *ngFor="let game of games" style="height: 210px;" class="board">
       <mat-card-content>
         <app-connect-four-board #board appConnectFour [speed]="gameSpeed" [width]="245" [height]="210"></app-connect-four-board>
       </mat-card-content>

@@ -13,10 +13,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./multi-player.component.css']
 })
 export class MultiPlayerComponent implements OnInit, AfterViewInit {
-  numGames = 5;
+  numGames = 10;
   games = [];
   gameSpeed = 0.5;
-  intervalTimer;
   playerList = [];
   redPlayer: Player;
   redPlayerWins = 0;
@@ -46,7 +45,7 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
             players => {
               this.playerList = players.map(player => {
                 return { name: player.name, id: player.id, photoURL: player.photoURL };
-              });
+              }).sort((a, b) => a.name < b.name ? -1 : 1);
             }
           );
         }
@@ -72,7 +71,10 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     let startPlayer = 1;
     this.connectFourBoards.forEach((board) => {
       board.connectFourService.resetGame(startPlayer);
-      board.connectFourService.init(this.redPlayer.name, this.yellowPlayer.name, startPlayer);
+      board.connectFourService.init(
+        this.redPlayer ? this.redPlayer.id : '',
+        this.yellowPlayer ? this.yellowPlayer.id : '', startPlayer
+      );
       startPlayer = startPlayer === 1 ? 2 : 1;
     });
     this._playNextTurn();
