@@ -19,7 +19,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectFourBoardComponent } from './connect-four-board/connect-four-board.component';
 import { SinglePlayerComponent } from './single-player/single-player.component';
 import { MultiPlayerComponent } from './multi-player/multi-player.component';
@@ -44,6 +44,7 @@ import 'hammerjs';
     BrowserAnimationsModule,
     AceEditorModule,
     FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
     MatSliderModule,
