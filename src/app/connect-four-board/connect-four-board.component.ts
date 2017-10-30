@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ConnectFourBoardComponent implements OnInit, AfterViewInit {
   @Input() numRows = 6;
   @Input() numCols = 7;
-  @Input() speed = 0.5;
+  @Input() speed = 500;
   @Input() width = 350;
   @Input() height = 300;
 
@@ -135,7 +135,7 @@ export class ConnectFourBoardComponent implements OnInit, AfterViewInit {
     const x = ((col + 1) * this._gridSquareSize) - (this._gridSquareSize / 2);
     const radius = this._gridSquareSize / 3;
     const color = this._getSpaceColor(space);
-    let delta = (this.speed * 7) ** 2;
+    let delta = ((this.speed / 1000) * 7) ** 2;
     delta = delta < 5 ? 5 : delta;
     let newY = startY + delta;
 

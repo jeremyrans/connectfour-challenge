@@ -101,25 +101,25 @@ function(state) {
   }
 
   playTurn(callback: () => any): void {
+    let playerBoard = this.gameState.getValue().board;
     if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
       const player = this.players.getValue()[this.currentPlayer - 1];
-      let stateCopy = JSON.parse(JSON.stringify(this.gameState.getValue().board));
       if (this.currentPlayer === 2) {
-        const normalizedState = [];
-        for (let i = 0; i < stateCopy.length; i++) {
-          normalizedState.push([]);
-          for (let j = 0; j < stateCopy[0].length; j++) {
-            if (stateCopy[i][j] === 0) {
-              normalizedState[i].push(0);
+        const normalizedBoard = [];
+        for (let i = 0; i < playerBoard.length; i++) {
+          normalizedBoard.push([]);
+          for (let j = 0; j < playerBoard[0].length; j++) {
+            if (this.gameState.getValue().board[i][j] === 0) {
+              normalizedBoard[i].push(0);
             } else {
-              normalizedState[i].push(stateCopy[i][j] === 1 ? 2 : 1);
+              normalizedBoard[i].push(playerBoard[i][j] === 1 ? 2 : 1);
             }
           }
         }
-        stateCopy = normalizedState;
+        playerBoard = normalizedBoard;
       }
 
-      player.getMove(stateCopy,
+      player.getMove(playerBoard,
         m => {
           const row = this._playMove(m, this.currentPlayer);
           this.piecePlayed.next([row, m, this.currentPlayer]);

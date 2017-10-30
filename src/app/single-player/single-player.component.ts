@@ -18,7 +18,7 @@ export class SinglePlayerComponent implements OnInit {
   player = new Player();
   selectedPosition = 'first';
   intervalTimer;
-  gameSpeed = 0.5;
+  gameSpeed = 500;
   difficulty = 'ai-1';
   prevSum = -1;
 
@@ -46,7 +46,7 @@ export class SinglePlayerComponent implements OnInit {
 
   private _playNextTurn(): void {
     this.connectFourService.playTurn(() => {
-      setTimeout(this._playNextTurn.bind(this), (1 - this.gameSpeed) * 1000);
+      setTimeout(this._playNextTurn.bind(this), 1000 - this.gameSpeed);
     });
   }
 

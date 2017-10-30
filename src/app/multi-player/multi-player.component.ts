@@ -6,6 +6,7 @@ import { GameOverState } from '../game-state/game-state';
 import { PlayerService } from '../player/player.service';
 import { UserService } from '../user/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-multi-player',
@@ -15,17 +16,22 @@ import { ActivatedRoute } from '@angular/router';
 export class MultiPlayerComponent implements OnInit, AfterViewInit {
   numGames = 10;
   games = [];
-  gameSpeed = 0.5;
+  gameSpeed = 500;
   playerList = [];
   redPlayer: Player;
   redPlayerWins = 0;
   yellowPlayer: Player;
   yellowPlayerWins = 0;
   secondColour = 'Yellow';
+  boardSubscriptions: Subscription[] = [];
 
   @ViewChildren('board') connectFourBoards: QueryList<ConnectFourBoardComponent>;
 
-  constructor(private _playerService: PlayerService, private _userService: UserService, private route: ActivatedRoute) { }
+  constructor(
+    private _playerService: PlayerService,
+    private _userService: UserService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(
@@ -53,16 +59,36 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit() {
+  initializeBoards(): void {
+    this.boardSubscriptions.forEach(
+      boardSub => {
+        boardSub.unsubscribe();
+      }
+    );
+    this.boardSubscriptions = [];
     this.connectFourBoards.forEach((board) => {
-      board.connectFourService.gameState.subscribe((state) => {
+      console.log('1');
+      this.boardSubscriptions.push(board.connectFourService.gameState.subscribe((state) => {
         if (state.gameOverState === GameOverState.PLAYER_1_WIN) {
           this.redPlayerWins++;
         } else if (state.gameOverState === GameOverState.PLAYER_2_WIN) {
           this.yellowPlayerWins++;
         }
-      });
+      }));
     });
+  }
+
+  ngAfterViewInit() {
+    this.initializeBoards();
+  }
+
+  onNumGamesChanged(): void {
+    this.games = new Array(this.numGames);
+    this.initializeBoards();
+  }
+
+  private _gameOver(): void {
+
   }
 
   startGame(): void {
@@ -86,12 +112,16 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     );
     let turns = playableBoards.length;
 
+    if (turns === 0) {
+      this._gameOver();
+    }
+
     playableBoards.forEach(
       board => {
         board.connectFourService.playTurn(() => {
           turns -= 1;
           if (turns === 0) {
-            setTimeout(this._playNextTurn.bind(this), (1 - this.gameSpeed) * 1000);
+            setTimeout(this._playNextTurn.bind(this), 1000 - this.gameSpeed);
           }
         });
       }
