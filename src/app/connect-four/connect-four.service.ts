@@ -14,6 +14,7 @@ export class ConnectFourService {
   piecePlayed: BehaviorSubject<[number, number, number]> = new BehaviorSubject(null);
   gameState: BehaviorSubject<GameState> = new BehaviorSubject(new GameState());
   players: BehaviorSubject<Player[]> = new BehaviorSubject([]);
+  playerTimers: number[] = [null, null];
 
   currentPlayer = 1;
   startingPlayer = 1;
@@ -80,6 +81,11 @@ function(state) {
     this.gameState.next(new GameState());
   }
 
+  private _updateGameState(state: GameOverState): void {
+    this.gameState.getValue().gameOverState = state;
+    this.gameState.next(this.gameState.getValue());
+  }
+
   private _playMove(col: number, player: number): number {
     let playedRow = -1;
     const board = this.gameState.getValue().board;
@@ -92,12 +98,24 @@ function(state) {
           break;
         }
       }
-      this.gameState.getValue().gameOverState = this._sandbox.checkWin(board);
+      this._updateGameState(this._sandbox.checkWin(board));
     } else {
-      this.gameState.getValue().gameOverState = player === 1 ? GameOverState.PLAYER_2_WIN : GameOverState.PLAYER_1_WIN;
+      this._updateGameState(player === 1 ? GameOverState.PLAYER_2_WIN : GameOverState.PLAYER_1_WIN);
     }
-    this.gameState.next(this.gameState.getValue());
     return playedRow;
+  }
+
+  private _playerTimerExpired(player: number): void {
+    this._updateGameState(player === 1 ? GameOverState.PLAYER_1_TIMEOUT : GameOverState.PLAYER_2_TIMEOUT);
+  }
+
+  private _clearPlayerTimer(player: number): void {
+    clearTimeout(this.playerTimers[player]);
+  }
+
+  private _startPlayerTimer(player: number): void {
+    this.playerTimers[player] = setTimeout(this._playerTimerExpired.bind(this), 1000, player);
+    console.log('starting player ' + player + ' timer ' + this.playerTimers[player]);
   }
 
   playTurn(callback: () => any): void {
@@ -119,9 +137,11 @@ function(state) {
         playerBoard = normalizedBoard;
       }
 
+      this._startPlayerTimer(this.currentPlayer);
       player.getMove(playerBoard,
         m => {
           const row = this._playMove(m, this.currentPlayer);
+          this._clearPlayerTimer(this.currentPlayer);
           this.piecePlayed.next([row, m, this.currentPlayer]);
           this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
           callback();

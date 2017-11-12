@@ -61,9 +61,14 @@ export class ConnectFourBoardComponent implements OnInit, AfterViewInit {
           this._drawPieces(state.board);
           if (state.gameOverState === GameOverState.STALEMATE) {
             this._drawMessage(this._boardContext, 'Stalemate!');
-          } else {
+          } else if (state.gameOverState === GameOverState.PLAYER_1_WIN || state.gameOverState === GameOverState.PLAYER_2_WIN) {
+            // regular win
             this._drawMessage(this._boardContext,
-              (state.gameOverState === 1 ? 'Red' : this.classicTheme ? 'Black' : 'Yellow') + ' Player Wins!');
+              (state.gameOverState === GameOverState.PLAYER_1_WIN ? 'Red' : this.classicTheme ? 'Black' : 'Yellow') + ' Player Wins!');
+          } else {
+            // win by timeout
+            this._drawMessage(this._boardContext,
+              (state.gameOverState === GameOverState.PLAYER_1_TIMEOUT ? 'Red' : this.classicTheme ? 'Black' : 'Yellow') + ' Timed Out!');
           }
         } else if (this._lastGameOverState !== GameOverState.NOT_OVER) {
           this._reset();

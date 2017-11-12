@@ -8,7 +8,9 @@ export enum GameOverState {
   NOT_OVER = 0,
   PLAYER_1_WIN = 1,
   PLAYER_2_WIN = 2,
-  STALEMATE = 3
+  STALEMATE = 3,
+  PLAYER_1_TIMEOUT = 4,
+  PLAYER_2_TIMEOUT = 5
 }
 
 const ROWS = 6;

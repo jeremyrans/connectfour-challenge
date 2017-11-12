@@ -69,9 +69,9 @@ export class MultiPlayerComponent implements OnInit, AfterViewInit {
     this.connectFourBoards.forEach((board) => {
       console.log('1');
       this.boardSubscriptions.push(board.connectFourService.gameState.subscribe((state) => {
-        if (state.gameOverState === GameOverState.PLAYER_1_WIN) {
+        if (state.gameOverState === GameOverState.PLAYER_1_WIN || state.gameOverState === GameOverState.PLAYER_2_TIMEOUT) {
           this.redPlayerWins++;
-        } else if (state.gameOverState === GameOverState.PLAYER_2_WIN) {
+        } else if (state.gameOverState === GameOverState.PLAYER_2_WIN || state.gameOverState === GameOverState.PLAYER_1_TIMEOUT) {
           this.yellowPlayerWins++;
         }
       }));
