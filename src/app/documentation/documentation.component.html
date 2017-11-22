@@ -77,8 +77,10 @@ function getMove(state, isStartingPlayer) {{'{'}}
         <th>Description</th>
       </tr>
       <tr>
-        <td>this.isValidMove(col)</td>
-        <td>col: integer value of the column</td>
+        <td>this.isValidMove(state, col)</td>
+        <td>state: 2d integer array representing a board state
+          <br/>col: integer value of the column
+        </td>
         <td>bool</td>
         <td>Use to check if a potential move is valid</td>
       </tr>
