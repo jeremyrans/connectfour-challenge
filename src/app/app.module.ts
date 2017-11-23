@@ -1,3 +1,4 @@
+import { TournamentService } from './tournament/tournament.service';
 import { SandboxService } from './sandbox/sandbox.service';
 import { UserService } from './user/user.service';
 import { AngularFireDatabase } from 'angularfire2/database-deprecated';
@@ -7,7 +8,10 @@ import { RouterModule } from '@angular/router';
 import { ConnectFourService } from './connect-four/connect-four.service';
 import { ConnectFourDirective } from './connect-four/connect-four.directive';
 import { PlayerService } from './player/player.service';
-import { MatCardModule, MatButtonModule, MatSliderModule, MatToolbarModule, MatSelectModule, MatRadioModule } from '@angular/material';
+import {
+  MatCardModule, MatButtonModule, MatSliderModule,
+  MatToolbarModule, MatSelectModule, MatRadioModule, MatInputModule
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -27,6 +31,8 @@ import { NavComponent } from './nav/nav.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import 'hammerjs';
+import { TournamentComponent } from './tournament/tournament.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +43,8 @@ import 'hammerjs';
     MultiPlayerComponent,
     NavComponent,
     NavItemComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    TournamentComponent
   ],
   imports: [
     BrowserModule,
@@ -51,18 +58,21 @@ import 'hammerjs';
     MatSelectModule,
     MatRadioModule,
     MatToolbarModule,
+    MatInputModule,
     RouterModule,
     routing,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
   providers: [
     PlayerService,
     ConnectFourService,
     UserService,
-    SandboxService
+    SandboxService,
+    TournamentService
   ],
   bootstrap: [AppComponent]
 })

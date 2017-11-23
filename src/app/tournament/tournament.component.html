@@ -2,13 +2,7 @@
   <div fxLayout="row wrap" fxLayoutAlign="space-around center">
     <mat-card fxFlex="25" class="player">
       <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-form-field>
-          <mat-select placeholder="Red Player" [(ngModel)]="redPlayer">
-            <mat-option *ngFor="let player of playerList" [value]="player">
-              {{ player.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        {{ (redPlayer || {'name': 'Red Player'}).name }}
       </mat-card-title>
       <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
         <img src="{{redPlayer && redPlayer.photoURL ? redPlayer.photoURL : 'https://image.flaticon.com/icons/svg/53/53172.svg'}}"
@@ -22,30 +16,25 @@
     <mat-card fxFlex="30" class="controls">
       <mat-card-content>
         <div>
+          <mat-form-field style="width: 80%">
+            <input matInput [(ngModel)]="tournamentId" [placeholder]="'Tournament ID'" />
+          </mat-form-field>
+        </div>
+        <div>
           <span style="line-height: 50px;">Speed:</span>
           <mat-slider [thumbLabel]="true" style="width: 75%;" max="1000" min="1" step="5" [value]="gameSpeed" [(ngModel)]="gameSpeed">
           </mat-slider>
         </div>
-        <!-- <div>
-          <span style="line-height: 50px;">Games:</span>
-          <mat-slider [thumbLabel]="true" style="width: 75%;" max="25" min="1" step="1" [value]="numGames" [(ngModel)]="numGames" (change)="onNumGamesChanged()">
-          </mat-slider>
-        </div> -->
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="startGame()">START</button>
+        <button mat-raised-button color="primary" (click)="startTournament()">Next</button>
+        <button mat-raised-button color="primary" (click)="startGame()">Play</button>
       </mat-card-actions>
     </mat-card>
 
     <mat-card fxFlex="25" class="player">
       <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-form-field>
-          <mat-select placeholder="{{ secondColour }}" [(ngModel)]="yellowPlayer">
-            <mat-option *ngFor="let player of playerList" [value]="player">
-              {{ player.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        {{ (yellowPlayer || {'name': 'Yellow Player'}).name }}
       </mat-card-title>
       <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
         <img src="{{yellowPlayer && yellowPlayer.photoURL ? yellowPlayer.photoURL : 'https://image.flaticon.com/icons/svg/53/53172.svg'}}"

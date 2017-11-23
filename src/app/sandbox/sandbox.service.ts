@@ -25,6 +25,10 @@ export class SandboxService {
   }
 
   checkWin(board: BoardSpace[][]): GameOverState {
+    if (board === null) {
+      return GameOverState.NOT_OVER;
+    }
+
     // Check down
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 7; c++) {

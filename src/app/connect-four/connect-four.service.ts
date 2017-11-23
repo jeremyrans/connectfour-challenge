@@ -82,8 +82,10 @@ function(state) {
   }
 
   private _updateGameState(state: GameOverState): void {
-    this.gameState.getValue().gameOverState = state;
-    this.gameState.next(this.gameState.getValue());
+    if (state !== this.gameState.getValue().gameOverState) {
+      this.gameState.getValue().gameOverState = state;
+      this.gameState.next(this.gameState.getValue());
+    }
   }
 
   private _playMove(col: number, player: number): number {
@@ -106,6 +108,7 @@ function(state) {
   }
 
   private _playerTimerExpired(player: number): void {
+    console.log(2);
     this._updateGameState(player === 1 ? GameOverState.PLAYER_1_TIMEOUT : GameOverState.PLAYER_2_TIMEOUT);
   }
 
@@ -115,7 +118,6 @@ function(state) {
 
   private _startPlayerTimer(player: number): void {
     this.playerTimers[player] = setTimeout(this._playerTimerExpired.bind(this), 1000, player);
-    console.log('starting player ' + player + ' timer ' + this.playerTimers[player]);
   }
 
   playTurn(callback: () => any): void {
@@ -140,10 +142,12 @@ function(state) {
       this._startPlayerTimer(this.currentPlayer);
       player.getMove(playerBoard,
         m => {
-          const row = this._playMove(m, this.currentPlayer);
-          this._clearPlayerTimer(this.currentPlayer);
-          this.piecePlayed.next([row, m, this.currentPlayer]);
-          this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+          if (this.gameState.getValue().gameOverState === GameOverState.NOT_OVER) {
+            const row = this._playMove(m, this.currentPlayer);
+            this._clearPlayerTimer(this.currentPlayer);
+            this.piecePlayed.next([row, m, this.currentPlayer]);
+            this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+          }
           callback();
         }
       );

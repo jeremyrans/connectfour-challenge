@@ -7,6 +7,10 @@ var sandbox = {
   },
 
   checkWin: function (board) {
+    if (!board) {
+      return 0;
+    }
+
     // Check down
     for (var r = 0; r < 3; r++) {
       for (var c = 0; c < 7; c++) {
