@@ -62,15 +62,8 @@ export class ConnectFourService {
     const p = new Player();
     p.id = id;
     p.name = 'Unknown';
-    p.code = `
-function(state) {
-  let topRow = state[0];
-  let validMoves = [];
-  topRow.forEach(function (v, i) {
-    if (v === 0) {
-      validMoves.push(i);
-    }
-  });
+    p.code = `function getCode(state, isStartingPlayer) {
+  var validMoves = this.getValidMoves(state);
   return validMoves[Math.floor(Math.random() * validMoves.length)];
 }`;
     return p;

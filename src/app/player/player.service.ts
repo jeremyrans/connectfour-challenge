@@ -4,6 +4,8 @@ import { Player, BasePlayer } from './player';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+const tableName = 'players-openhouse';
+
 @Injectable()
 export class PlayerService {
   constructor(
@@ -13,21 +15,21 @@ export class PlayerService {
 
   getPlayer(id: string): Observable<BasePlayer> {
     if (id && this._userService.user) {
-      return this._db.object('players/' + id).valueChanges();
+      return this._db.object(tableName + '/' + id).valueChanges();
     }
     return Observable.of(null);
   }
 
   getAllPlayers(): Observable<any[]> {
     if (this._userService.user) {
-      return this._db.list('players').valueChanges();
+      return this._db.list(tableName).valueChanges();
     }
     return Observable.of(null);
   }
 
   savePlayer(player: Player): void {
     if (this._userService.user) {
-      this._db.object('players/' + player.id).set(player.toBasePlayer());
+      this._db.object(tableName + '/' + player.id).set(player.toBasePlayer());
     }
   }
 }
