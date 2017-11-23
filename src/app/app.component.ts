@@ -9,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent {
   navItems = [
     { label: 'Practice', href: '/practice' },
-    { label: 'Multiplayer', href: '/multi-player' },
-    { label: 'Tournament', href: '/tournament' },
+    // { label: 'Multiplayer', href: '/multi-player' },
+    // { label: 'Tournament', href: '/tournament' },
     { label: 'Documentation', href: '/docs' }
   ];
 

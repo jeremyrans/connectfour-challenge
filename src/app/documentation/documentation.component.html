@@ -12,6 +12,7 @@
       <li>a winner is determined</li>
       <li>an invalid move is attempted</li>
       <li>a stalemate is reached</li>
+      <li>your algorithm times out (you lose) - you get 1 second / move</li>
     </ul>
 
     <h2>State</h2>
@@ -39,7 +40,8 @@
     <h2>isStartingPlayer</h2>
     <p>
       The second argument passed to your function is a boolean representing whether or not you are the starting player in the game.
-      True indicates that you have taken your turn first, while false indicates your turn comes second.
+      True indicates that you have taken your turn first, while false indicates your turn comes second. You can use this
+      value if you wish to have different strategies for going first vs going second.
     </p>
 
     <h2>Syntax</h2>
